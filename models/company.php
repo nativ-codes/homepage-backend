@@ -9,7 +9,7 @@
 		public $name;
 		public $symbol;
 		public $weight;
-		public $indice;
+		public $marketIndex;
 
 		// Constructor with DB
 		public function __construct($db) {
@@ -30,18 +30,18 @@
 			return $stmt;
 		}
 
-		// Get Companies by Index
+		// Get Companies by MarketIndex
 		public function readByIndex() {
-			$this->indice = htmlspecialchars(strip_tags($this->indice));
+			$this->marketIndex = htmlspecialchars(strip_tags($this->marketIndex));
 
 			// Create query
-			$query = 'SELECT * FROM ' . $this->table . ' WHERE indice = :indice';
+			$query = 'SELECT * FROM ' . $this->table . ' WHERE market_index = :market_index';
 		
 			// Prepare statement
 			$stmt = $this->conn->prepare($query);
 
 			// Bind data
-			$stmt->bindParam(':indice', $this->indice);
+			$stmt->bindParam(':market_index', $this->marketIndex);
 
 			// Execute query
 			if($stmt->execute()) {
@@ -57,7 +57,7 @@
 		// Create Company
 		public function create($company) {
 			// Create query
-			$query = 'INSERT INTO ' . $this->table . ' SET symbol = :symbol, name = :name, weight = :weight, indice = :indice';
+			$query = 'INSERT INTO ' . $this->table . ' SET symbol = :symbol, name = :name, weight = :weight, market_index = :market_index';
 
 			// Prepare statement
 			$stmt = $this->conn->prepare($query);
@@ -66,13 +66,13 @@
 			$this->name = htmlspecialchars(strip_tags($company->name));
 			$this->symbol = htmlspecialchars(strip_tags($company->symbol));
 			$this->weight = htmlspecialchars(strip_tags($company->weight));
-			$this->indice = htmlspecialchars(strip_tags($company->indice));
+			$this->marketIndex = htmlspecialchars(strip_tags($company->marketIndex));
 
 			// Bind data
 			$stmt->bindParam(':name', $this->name);
 			$stmt->bindParam(':symbol', $this->symbol);
 			$stmt->bindParam(':weight', $this->weight);
-			$stmt->bindParam(':indice', $this->indice);
+			$stmt->bindParam(':market_index', $this->marketIndex);
 
 			// Execute query
 			if($stmt->execute()) {
@@ -102,16 +102,16 @@
 		// // Delete Post
 		public function deleteAll() {
 			// Create query
-			$query = 'DELETE FROM ' . $this->table . ' WHERE indice = :indice';
+			$query = 'DELETE FROM ' . $this->table . ' WHERE market_index = :market_index';
 
 			// Prepare statement
 			$stmt = $this->conn->prepare($query);
 
 			// Clean data
-			$this->indice = htmlspecialchars(strip_tags($this->indice));
+			$this->marketIndex = htmlspecialchars(strip_tags($this->marketIndex));
 
 			// Bind data
-			$stmt->bindParam(':indice', $this->indice);
+			$stmt->bindParam(':market_index', $this->marketIndex);
 
 			// Execute query
 			if($stmt->execute()) {

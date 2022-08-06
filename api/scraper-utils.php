@@ -1,6 +1,6 @@
 <?php
 
-	function scrapeBETCompanies($finder, $indiceName) {
+	function scrapeBETCompanies($finder, $marketIndexName) {
 		$companiesQuery = $finder->query("//table[@id='gvC']/tbody/tr");
 		$companies = array();
 
@@ -13,7 +13,7 @@
 				'name' => $name,
 				'symbol' => $symbol,
 				'weight' => $weight,
-				'indice' => $indiceName
+				'marketIndex' => $marketIndexName
 			));		
 		}
 

@@ -2,18 +2,18 @@
 
 	include_once '../config/database.php';
 	include_once '../models/company.php';
-	include_once '../models/indice.php';
+	include_once '../models/market-index.php';
 	include_once './scraper-utils.php';
 
 	$bvbUrl = "https://bvb.ro/FinancialInstruments/Indices/IndicesProfiles.aspx?i=BET";
-	$indiceName = "BET";
+	$marketIndexName = "BET";
 	$database = new Database();
 	$db = $database->connect();
 
 	$company = new Company($db);
-	$company->indice = $indiceName;
+	$company->marketIndex = $marketIndexName;
 	
-	$indice = new Indice($db);
+	$marketIndex = new MarketIndex($db);
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -26,7 +26,7 @@
 	$finder = new DomXPath($dom);
 	curl_close($ch);
 
-	$indice->update($indiceName, scrapeBETLastUpdated($finder));
-	$company->replaceAll(scrapeBETCompanies($finder, $indiceName));
+	$marketIndex->update($marketIndexName, scrapeBETLastUpdated($finder));
+	$company->replaceAll(scrapeBETCompanies($finder, $marketIndexName));
 
 ?>

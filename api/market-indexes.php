@@ -4,18 +4,17 @@
 	header('Content-Type: application/json');
 
 	include_once '../config/database.php';
-	include_once '../models/company.php';
+	include_once '../models/market-index.php';
 
 	// Instantiate DB & connect
 	$database = new Database();
 	$db = $database->connect();
 
-	// Instantiate company object
-	$company = new Company($db);
+	// Instantiate marketIndex object
+	$marketIndex = new MarketIndex($db);
 
-	// Company query
-	$company->marketIndex = isset($_GET['marketIndex']) ? $_GET['marketIndex'] : die();
-	$result = $company->readByIndex();
+	// MarketIndex query
+	$result = $marketIndex->read();
 
 	// Post array
 	$posts_arr['data'] = array();
@@ -26,8 +25,11 @@
 		$post_item = array(
 			'name' => $name,
 			'symbol' => $symbol,
-			'weight' => $weight,
-			'marketIndex' => $market_index
+			'lastUpdated' => $last_updated,
+			'country' => $country,
+			'isActive' => $is_active,
+			'currency' => $currency,
+			'currencyPlacement' => $currency_placement
 		);
 
 		// Push to "data"
