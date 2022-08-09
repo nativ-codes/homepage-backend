@@ -85,8 +85,8 @@
 			return false;
 		}
 
-		public function replaceAll($companies) {
-			$this->deleteAll();
+		public function replaceAll($marketIndexName, $companies) {
+			$this->deleteAll($marketIndexName);
 
 			foreach ($companies as $company) {
 				$companyObject = (object) $company;
@@ -100,7 +100,7 @@
 		}
 
 		// // Delete Post
-		public function deleteAll() {
+		public function deleteAll($marketIndexName) {
 			// Create query
 			$query = 'DELETE FROM ' . $this->table . ' WHERE market_index = :market_index';
 
@@ -108,7 +108,7 @@
 			$stmt = $this->conn->prepare($query);
 
 			// Clean data
-			$this->marketIndex = htmlspecialchars(strip_tags($this->marketIndex));
+			$this->marketIndex = htmlspecialchars(strip_tags($marketIndexName));
 
 			// Bind data
 			$stmt->bindParam(':market_index', $this->marketIndex);
