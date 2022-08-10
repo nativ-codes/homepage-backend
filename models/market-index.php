@@ -22,7 +22,7 @@
 		// Get MarketIndexes
 		public function read() {
 			// Create query
-			$query = 'SELECT * FROM ' . $this->table . 'WHERE is_active = 1';
+			$query = 'SELECT * FROM ' . $this->table . ' WHERE is_active = 1';
 			
 			// Prepare statement
 			$stmt = $this->conn->prepare($query);
