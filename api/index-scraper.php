@@ -1,6 +1,6 @@
 <?php
 
-	include_once '../config/database.php';
+	include_once '../config/core.php';
 	include_once '../models/company.php';
 	include_once '../models/market-index.php';
 	include_once './scraper-utils.php';

@@ -16,20 +16,6 @@
 			$this->conn = $db;
 		}
 
-		// Get Companies
-		public function read() {
-			// Create query
-			$query = 'SELECT * FROM ' . $this->table;
-			
-			// Prepare statement
-			$stmt = $this->conn->prepare($query);
-
-			// Execute query
-			$stmt->execute();
-
-			return $stmt;
-		}
-
 		// Get Companies by MarketIndex
 		public function readByIndex() {
 			$this->marketIndex = htmlspecialchars(strip_tags($this->marketIndex));
@@ -45,13 +31,14 @@
 
 			// Execute query
 			if($stmt->execute()) {
+				logMsg("[READ COMPANIES BY INDEX]: " . $this->marketIndex);
+
 				return $stmt;
+			} else {
+				logMsg("[FAIL READ COMPANIES BY INDEX]: " . $this->marketIndex . " " . $stmt->error);
+
+				return false;
 			}
-
-			// Print error if something goes wrong
-			printf("Error: %s.\n", $stmt->error);
-
-			return false;
 		}
 
 		// Create Company
@@ -76,13 +63,14 @@
 
 			// Execute query
 			if($stmt->execute()) {
+				logMsg("[CREATE COMPANY]: " . $this->symbol);
+
 				return true;
+			} else {
+				logMsg("[FAIL CREATE COMPANY]: " . $this->symbol . " " . $stmt->error);
+
+				return false;
 			}
-
-			// Print error if something goes wrong
-			printf("Error: %s.\n", $stmt->error);
-
-			return false;
 		}
 
 		public function replaceAll($marketIndexName, $companies) {
@@ -91,15 +79,11 @@
 			foreach ($companies as $company) {
 				$companyObject = (object) $company;
 
-				if ($this->create($companyObject) === TRUE) {
-					echo "New record created successfully " . $companyObject->symbol . "<br>";
-				} else {
-					echo "Error: " . $updateSql . "<br>" . $conn->error;
-				}
+				$this->create($companyObject);
 			}
 		}
 
-		// // Delete Post
+		// Delete Post
 		public function deleteAll($marketIndexName) {
 			// Create query
 			$query = 'DELETE FROM ' . $this->table . ' WHERE market_index = :market_index';
@@ -115,15 +99,15 @@
 
 			// Execute query
 			if($stmt->execute()) {
+				logMsg("[DELETE ALL COMPANIES]: " . $this->marketIndex);
+
 				return true;
+			} else {
+				logMsg("[FAIL DELETE ALL COMPANIES]: " . $this->marketIndex . " " . $stmt->error);
+
+				return false;
 			}
-
-			// Print error if something goes wrong
-			printf("Error: %s.\n", $stmt->error);
-
-			return false;
 		}
-		
 	}
 
 ?>

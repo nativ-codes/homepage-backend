@@ -28,9 +28,15 @@
 			$stmt = $this->conn->prepare($query);
 
 			// Execute query
-			$stmt->execute();
+			if($stmt->execute()) {
+				logMsg("[READ INDEXES]");
 
-			return $stmt;
+				return $stmt;
+			} else {
+				logMsg("[FAIL READ INDEXES]");
+
+				return false;
+			}
 		}
 
 		// Update MarketIndex
@@ -51,13 +57,15 @@
 
 			// Execute query
 			if($stmt->execute()) {
+				logMsg("[UPDATE INDEX]: " . $this->symbol);
+
 				return true;
+			} else {
+				logMsg("[FAIL UPDATE INDEX]: " . $this->symbol . " " . $stmt->error);
+
+				return false;
 			}
 
-			// Print error if something goes wrong
-			printf("Error: $s.\n", $stmt->error);
-
-			return false;
 		}
 	}
 
