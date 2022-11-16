@@ -6,6 +6,7 @@
 		private $table = 'market_indexes';
 
 		// MarketIndex Properties
+		public $id;
 		public $name;
 		public $symbol;
 		public $lastUpdated;
@@ -52,8 +53,8 @@
 			$this->symbol = htmlspecialchars(strip_tags($symbol));
 
 			// Bind data
-			$stmt-> bindParam(':last_updated', $this->lastUpdated);
-			$stmt-> bindParam(':symbol', $this->symbol);
+			$stmt->bindParam(':last_updated', $this->lastUpdated);
+			$stmt->bindParam(':symbol', $this->symbol);
 
 			// Execute query
 			if($stmt->execute()) {

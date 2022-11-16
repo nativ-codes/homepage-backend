@@ -23,6 +23,7 @@
 		extract($row);
 
 		$post_item = array(
+			'id' => $country . '_' . $symbol,
 			'name' => $name,
 			'symbol' => $symbol,
 			'lastUpdated' => $last_updated,
