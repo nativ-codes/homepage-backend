@@ -24,6 +24,7 @@
 		extract($row);
 
 		$post_item = array(
+			'id' => $market_index . '_' . $symbol,
 			'name' => $name,
 			'symbol' => $symbol,
 			'weight' => $weight,

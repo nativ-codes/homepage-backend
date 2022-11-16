@@ -6,7 +6,6 @@
 		private $table = 'market_indexes';
 
 		// MarketIndex Properties
-		public $id;
 		public $name;
 		public $symbol;
 		public $lastUpdated;
